@@ -116,4 +116,5 @@ The config files are documented inline (`eaglerxserver/listeners.toml` etc.). A 
 ## Credits / licensing
 
 - EaglercraftX and the EaglerXServer core are by [lax1dude](https://lax1dude.net/eaglerxserver/), copyright (c) 2024-2025 lax1dude, ayunami2000. See `LICENSE` (same terms as the upstream EaglerXServer).
+- The **Fabric 26.2 port** (this platform adapter) is by [IvanIsOK](https://github.com/IvanIsOK).
 - This repo is a **platform port** (Fabric adapter) of the EaglerX server core, not the Eaglercraft client itself. The browser client is a separate project.
