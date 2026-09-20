@@ -1,0 +1,63 @@
+plugins {
+	id "net.fabricmc.fabric-loom" version "1.17-SNAPSHOT"
+	id "java"
+}
+
+version = "1.1.1-fabric-26.2"
+group = "net.lax1dude.eaglercraft.backend"
+
+base {
+	archivesName = "EaglerXServer-Fabric"
+}
+
+repositories {
+	mavenCentral()
+	maven { url = "https://maven.fabricmc.net/" }
+}
+
+dependencies {
+	minecraft "com.mojang:minecraft:26.2"
+	implementation "net.fabricmc:fabric-loader:0.19.3"
+	implementation "net.fabricmc.fabric-api:fabric-api:0.156.0+26.2"
+
+	def eaglerJars = fileTree(dir: "libs", includes: ["core-1.1.1.jar", "api-1.1.1.jar", "core-config-1.1.1.jar", "skin-cache-1.1.1.jar", "protocol-game-1.1.1.jar", "backend-rpc-protocol-1.1.1.jar", "voice-rpc-protocol-1.1.1.jar", "supervisor-protocol-1.1.1.jar"])
+	implementation eaglerJars
+
+	compileOnly "org.ow2.asm:asm:9.9.1"
+}
+
+java {
+	toolchain {
+		languageVersion = JavaLanguageVersion.of(25)
+	}
+	withSourcesJar()
+}
+
+loom {
+	accessWidenerPath = file("src/main/resources/eaglerxserver.accesswidener")
+}
+
+jar {
+	def eaglerJars = fileTree(dir: "libs", includes: ["core-1.1.1.jar", "api-1.1.1.jar", "core-config-1.1.1.jar", "skin-cache-1.1.1.jar", "protocol-game-1.1.1.jar", "backend-rpc-protocol-1.1.1.jar", "voice-rpc-protocol-1.1.1.jar", "supervisor-protocol-1.1.1.jar"])
+	from(eaglerJars.collect { zipTree(it) }) {
+		exclude("META-INF/MANIFEST.MF", "META-INF/*.SF", "META-INF/*.DSA", "META-INF/*.RSA")
+		duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+	}
+	from("LICENSE") {
+		rename { "${it}_${project.base.archivesName.get()}" }
+	}
+	from(file("libs/driver.jar")) {
+		rename { "net/lax1dude/eaglercraft/backend/skin_cache/libs/sqlite-jdbc.library" }
+	}
+}
+
+processResources {
+	inputs.property "version", project.version
+	filesMatching("fabric.mod.json") {
+		expand "version": project.version
+	}
+}
+
+tasks.withType(JavaCompile).configureEach {
+	options.release = 21
+}

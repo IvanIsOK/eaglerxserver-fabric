@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "id": "eaglerxserver",
+  "version": "${version}",
+  "name": "EaglerXServer",
+  "description": "Eaglercraft 1.8 dual-stack WebSocket/TCP server platform port for Fabric 26.2",
+  "authors": [
+    "lax1dude"
+  ],
+  "contact": {
+    "homepage": "https://lax1dude.net/eaglerxserver/",
+    "sources": "https://github.com/lax1dude/eaglerxserver"
+  },
+  "license": "LicenseRef-Nonstandard (see LICENSE)",
+  "icon": "assets/eaglerxserver/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.lax1dude.eaglercraft.backend.server.fabric.PlatformPluginFabric"
+    ]
+  },
+  "mixins": [
+    "eaglerxserver.mixins.json"
+  ],
+  "accessWidener": "eaglerxserver.accesswidener",
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~26.2",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
