@@ -99,6 +99,13 @@ The config files are documented inline (`eaglerxserver/listeners.toml` etc.). A 
 
 `/register` and `/login` commands are **not** part of this mod. For password-based player registration use a separate auth plugin (e.g. a Fabric authentication mod). Handle the core's auth events (`enable_authentication_events = true` in `settings.toml`) to integrate your own system.
 
+> **The auth mod needs editing before it works properly here.** The stock plugin hard-blocks unregistered players in a way that fights the Eagler websocket login flow. At minimum you must patch its `lang/en_us.json` so the kick/no-privilege messages reflect the real restrictions (the default text falsely claims the player "CANNOT move"), and tune the auth timeout. An example tested setup is the community `Authenticate` mod (`cn.enaium.authenticate`):
+> - pin `fabric-orm-jimmer` to `1.0.5+jimmer.0.10.10` (the `.jimmer.0.11.2` line breaks its entity codegen at build/runtime on this stack);
+> - install the matching `fabric-database-h2`, `fabric-language-kotlin`, and `Authenticate` jars together;
+> - reword `authenticate.message.unregistered` / `authenticate.message.unauthenticate` so they don't over-claim (e.g. login restrictions, not "move");
+> - set `authExpire` in its `Authenticate.json` (e.g. `60000` ms idle auto-logout, tune to taste).
+> Expect a full server restart after editing, and confirm `/register`/`/login`/`/logout`/`/ban` actually fire through the websocket connection.
+
 ## Troubleshooting
 
 - **502 / connection refused from the reverse proxy** — the Fabric server isn't running or isn't listening on the port Caddy proxies to.
