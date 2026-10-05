@@ -24,7 +24,7 @@ This mod lets **browser players** (Eaglercraft, a free clone of Minecraft 1.8 th
 ## Requirements
 
 - **Minecraft:** 26.2 (Fabric)
-- **Fabric Loader:** `>= 0.19.3` (comes with the server launcher)
+- **Fabric Loader:** `>= 0.19.3` (comes with the server launcher)(probally stay on this loader version for most compat)
 - **Fabric API:** `0.156.0+26.2` (must be in `mods/`)
 - **Java:** 21+ (build with JDK 25)
 
@@ -55,7 +55,7 @@ The fabric platform code is the `src/` of this repo. The EaglerX 1.1.1 core jars
 
 ## Installing
 
-1. Install a Fabric 26.2 server (loader 0.19.3+).
+1. Install a Fabric 26.2 server (loader 0.19.3+).(probally stay on this loader version for most compat
 2. Copy into your server's `mods/` folder:
    - `EaglerXServer-Fabric-1.1.1-fabric-26.2.jar`
    - `fabric-api-0.156.0+26.2.jar`
